@@ -4,7 +4,7 @@
 ###
 
 class WebAudioApi
-	
+  
   constructor: () ->
     @context = new (window.AudioContext || window.webkitAudioContext)
     @soundout = @context.destination
@@ -34,9 +34,9 @@ class WebAudioApi
             
             
   callback: (data) =>
-  	console.log('ESTAMOS YA EN EL CALLBACCKKKKKSS')
-  	  
-  	  
+        console.log('ESTAMOS YA EN EL CALLBACCKKKKKSS')
+      
+      
   gotStream: (stream) =>
         @bufLength = @length * @context.sampleRate
 
@@ -71,17 +71,17 @@ class WebAudioApi
             #numbars = 14
 
             for i in [0...@numbars]
-            	    multipliers = @analyser.frequencyBinCount / @numbars
-            	    
-            	    magnitude = 0
-            	    multipliers = Math.floor ( multipliers )
-            	    offset = i * multipliers 
-            	    #gotta sum/average the block, or we miss narrow-bandwidth spikes
-            	    for j in [0...multipliers]
-            	    	    magnitude += freqByteData[offset + j]            	    	   
-            	    
-            	    magnitude = magnitude / multipliers
-            	    @fft[i] = magnitude
+                  multipliers = @analyser.frequencyBinCount / @numbars
+                  
+                  magnitude = 0
+                  multipliers = Math.floor ( multipliers )
+                  offset = i * multipliers 
+                  #gotta sum/average the block, or we miss narrow-bandwidth spikes
+                  for j in [0...multipliers]
+                        magnitude += freqByteData[offset + j]                       
+                  
+                  magnitude = magnitude / multipliers
+                  @fft[i] = magnitude
 
             @total += @bufferSize
             if @total > @bufLength

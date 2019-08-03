@@ -4,6 +4,7 @@
 ###
 
 _  = require 'underscore'
+global.THREE = require('three')
 
 require '../../js/threejs/shaders/CopyShader'
 require '../../js/threejs/shaders/LCLBlendShader'
@@ -13,7 +14,6 @@ require '../../js/threejs/postprocessing/MaskPass'
 require '../../js/threejs/postprocessing/RenderPass'
 require '../../js/threejs/postprocessing/SavePass'
 require '../../js/threejs/postprocessing/ShaderPass'
-
 
 class ThreeJsSystem
 

@@ -10,7 +10,7 @@
 ###
 
 CodePreprocessor     = require './code-preprocessor'
-CoffeeScriptCompiler = require '../../../js/coffee-script'
+CoffeeScriptCompiler = require 'coffeescript'
 
 class CodeCompiler
   currentCodeString: null
@@ -39,7 +39,7 @@ class CodeCompiler
       return output
 
     [code, error] = @codePreprocessor.preprocess code
-
+    console.log "PREPROCESSED TO", code
     # if 'error' is anything else then undefined then it
     # means that the process of translation has found
     # some glaringly missing pieces. In which case,

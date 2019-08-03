@@ -72,9 +72,9 @@ TimeKeeper        = require './time-keeper'
 Pulse             = require '../../js/pulse'
 Math              = require '../globals/math'
 GlobalScope       = require './global-scope'
-SampleBank        = require '../sound/samplebank'
-SoundSystem       = require '../sound/sound-system'
-PatternPlayer     = require '../sound/pattern-player'
+# SampleBank        = require '../sound/samplebank'
+# SoundSystem       = require '../sound/sound-system'
+# PatternPlayer     = require '../sound/pattern-player'
 ThreeJsSystem     = require './threejs-system'
 
 class LiveCodeLabCore
@@ -110,12 +110,12 @@ class LiveCodeLabCore
     @mathFunctions = new Math()
     @otherCommands = new OtherCommands()
     
-    @soundSystem = new SoundSystem(
-      @timeKeeper,
-      @audioAPI,
-      new SampleBank(@audioAPI),
-      new PatternPlayer()
-    )
+    # @soundSystem = new SoundSystem(
+    #   @timeKeeper,
+    #   @audioAPI,
+    #   new SampleBank(@audioAPI),
+    #   new PatternPlayer()
+    # )
     
     @backgroundPainter = new BackgroundPainter(
       @backgroundDiv,
@@ -143,6 +143,9 @@ class LiveCodeLabCore
       @ #lightSystem
     )
 
+    console.log "GRAPHIC COMMANDS", @graphicsCommands
+    global.graphicsCommands = @graphicsCommands
+    
     @lightSystem = new LightsCommands(
       @graphicsCommands,
       @threeJsSystem,
@@ -158,7 +161,7 @@ class LiveCodeLabCore
       @backgroundPainter,
       @threeJsSystem,
       @matrixCommands,
-      @soundSystem,
+      {},
       @lightSystem,
       @graphicsCommands
     )
@@ -169,7 +172,7 @@ class LiveCodeLabCore
     @colourLiterals.addToScope(@globalscope)
     @backgroundPainter.addToScope(@globalscope)
     @blendControls.addToScope(@globalscope)
-    @soundSystem.addToScope(@globalscope)
+    # @soundSystem.addToScope(@globalscope)
     @colourFunctions.addToScope(@globalscope)
     @listFunctions.addToScope(@globalscope)
     @animationLoop.addToScope(@globalscope)
@@ -188,10 +191,30 @@ class LiveCodeLabCore
     @programRunner.runLastWorkingProgram()
 
   playStartupSound: ->
-    @soundSystem.playStartupSound()
+    true
+    # @soundSystem.playStartupSound()
 
   isAudioSupported: ->
-    @soundSystem.isAudioSupported()
+    false
+    # @soundSystem.isAudioSupported()
+
+  eval: (f) ->
+    @eventRouter.emit("clear-error")
+    @programRunner.setProgram(f)
+    if @animationLoop.sleeping
+      @animationLoop.sleeping = false
+      @animationLoop.animate()
+
+      @eventRouter.emit("livecodelab-waking-up")
+
+  stop: () ->
+    @animationLoop.sleeping = true
+    @timeKeeper.resetTime()
+    @graphicsCommands.resetTheSpinThingy = true
+    @eventRouter.emit("clear-error")
+    @programRunner.reset()
+    @eventRouter.emit("livecodelab-sleeping")
+
 
   updateCode: (newCode) ->
 

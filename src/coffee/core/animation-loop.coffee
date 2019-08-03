@@ -156,7 +156,7 @@ class AnimationLoop
       @blendControls.animationStyle(@blendControls.animationStyles.normal)
 
     @blendControls.animationStyleUpdateIfChanged()
-    @backgroundPainter.simpleGradientUpdateIfChanged()
+    # @backgroundPainter.simpleGradientUpdateIfChanged()
     @threeJsSystem.render @graphicsCommands
 
   cleanStateBeforeRunningDrawAndRendering: ->
@@ -166,14 +166,14 @@ class AnimationLoop
 
     # the sound list needs to be cleaned
     # so that the user program can create its own from scratch
-    @soundSystem.clearPatterns()
+    # @soundSystem.clearPatterns()
 
     @programRunner.resetTrackingOfDoOnceOccurrences()
 
     @lightSystem.noLights()
     @graphicsCommands.reset()
     @blendControls.animationStyle @blendControls.animationStyles.normal
-    @backgroundPainter.resetGradientStack()
+    # @backgroundPainter.resetGradientStack()
 
     # In case we want to make each frame an actual
     # pure function then we need to seed "random" and "noise"

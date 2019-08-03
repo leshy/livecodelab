@@ -3,6 +3,7 @@
 ###
 
 _ = require('underscore')
+$ = require('jquery')
 
 # This resolution is easily managed by modern graphic cards (the PS Vita can).
 IDEAL_RESOLUTION = {width: 880, height: 720}
